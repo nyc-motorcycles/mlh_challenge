@@ -1,0 +1,26 @@
+<h1>Upcoming Hackthons!</h1>
+
+<div class="welcome-hackathon-upcoming row">
+  <% @upcoming_hackathons.each do |hackathon| %>
+    <div class="col-md-4">
+      <div class="welcome-hackathon-upcoming-image">
+        <%= link_to hackathon do %>
+          <%= image_tag "http://lorempixel.com/200/200/city/" %>
+        <% end %>
+      </div>
+      <div class="welcome-hackathon-upcoming-name">
+        <strong>
+          <%= link_to hackathon.name, hackathon %>
+        </strong>
+      </div>
+      <div class="welcome-hackathon-upcoming-location">
+        <em>
+          <%= hackathon.location %>
+        </em>
+      </div>
+      <div class="welcome-hackathon-upcoming-date">
+        <%= hackathon.date.strftime("%b %e at %l:%M %p") %>
+      </div>
+    </div>
+  <% end %>
+</div>
