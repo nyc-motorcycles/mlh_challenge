@@ -1,0 +1,68 @@
+<% content_for :page_header do "Hi #{@user.name}" end %>
+<% content_for :page_sub_header do "#{current_user == @user ? 'My profile' : 'Profile'}" end %>
+
+<h2>My settings</h2>
+<table class="table table-hover">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td><%= @user.name %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= @user.email %></td>
+    </tr>
+    <tr>
+      <td>Referral link</td>
+      <td><%= link_to "#{new_user_registration_url}?#{{referral_code: @user.referral_code}.to_query}" %></td>
+    </tr>
+    <tr>
+      <td>Referrer</td>
+      <td><%= link_to @user.referrer.name, @user.referrer if @user.referrer %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Hackathons</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Hackathon</th>
+      <th>Location</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.hackathons.order(date: :asc).each_with_index do |hackathon, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= link_to hackathon.name, hackathon %></td>
+        <td><%= hackathon.location %></td>
+        <td><%= hackathon.date.strftime("%b %e at %l:%M %p") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user == @user %>
+<h2>My referrals</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.referrees.each_with_index do |user, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= link_to user.name, user %></td>
+        <td><%= user.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
